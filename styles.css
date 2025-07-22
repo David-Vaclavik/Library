@@ -23,8 +23,12 @@ p {
     /* Important */
 }
 
-input, button, textarea, select {
+input, button, textarea, select, dialog {
   font: inherit;
+}
+
+h1 {
+    letter-spacing: 4px;
 }
 
 /* ================================== Reset ends here =================================== */
@@ -42,13 +46,91 @@ header {
     background-color: oklch(35% 0 0);
 }
 
+button {
+    width: 180px;
+    height: 60px;
+    margin: 20px;
+    border-style: none;
+    border-radius: 500px;
+    font-size: 28px;
+    font-weight: 600;
+    color: inherit;
+    background-color: oklch(50% 0.11 215);
+}
+
+dialog {
+    justify-self: center;
+    align-self: center;
+
+    z-index: 10;
+    margin: 10px;
+    padding: 10px;
+    background: rgb(12, 59, 214);
+    border: none;
+    border-radius: 1rem;
+    color: inherit;
+}
+
+dialog::backdrop {
+  background-color: oklch(0% 0 0 / 0.5);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+    align-items: stretch;
+
+    width: 350px;
+}
+
+input {
+    width: 200px;
+    /* TODO: Fix checkbox width */
+}
+
+.label-input {
+    display: flex;
+    flex-direction: row;
+    /* flex: auto; */
+    /* justify-self: stretch; */
+    justify-content: space-between;
+
+    padding: 5px 10px;
+    background-color: rgb(12, 126, 55);
+}
+
+.close-button {
+    /* justify-self: center; */
+    align-self: center;
+    background-color: blueviolet;
+}
+
 main {
+    display: flex;
+    flex-wrap: wrap;
+    flex: auto;
+    justify-content: center;
+    /* justify-content: flex-start; */
+    /* align-items: stretch; */
+    align-self: stretch;
     background-color: darkgreen;
 }
 
+.card {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    width: 250px;
+    margin: 20px;
+    padding: 20px;
+    background-color: brown;
+}
 
-
-
+.remove {
+    margin: 20px 0 0 0;
+    align-self: center;
+}
 
 
 
