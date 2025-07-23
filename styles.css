@@ -36,14 +36,27 @@ h1 {
 
 header {
     display: flex;
-    /* flex: auto; */
     justify-content: center;
     align-items: center;
 
     width: 100vw;
     height: 150px;
     font-size: 32px;
+    box-shadow: 0 8px 16px oklch(0% 0 0 / 0.5);
     background-color: oklch(35% 0 0);
+}
+
+h1 {
+    text-shadow: 0 4px 8px oklch(0% 0 0 / 0.3);
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    flex: auto;
+    justify-content: center;
+    align-self: stretch;
+    background-color: oklch(20% 0 0);
 }
 
 button {
@@ -56,6 +69,31 @@ button {
     font-weight: 600;
     color: inherit;
     background-color: oklch(50% 0.11 215);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px oklch(0% 0 0 / 0.2);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px oklch(0% 0 0 / 0.3);
+    background-color: oklch(55% 0.14 215);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px oklch(0% 0 0 / 0.2);
+}
+
+/* TODO: outline */
+button:focus {
+    outline: 2px solid oklch(70% 0.11 215);
+    outline-offset: 2px;
+}
+
+.add-book-button {
+    z-index: 5;
+    margin-bottom: 0;
 }
 
 dialog {
@@ -63,9 +101,8 @@ dialog {
     align-self: center;
 
     z-index: 10;
-    margin: 10px;
     padding: 10px;
-    background: rgb(12, 59, 214);
+    background: oklch(35% 0 0);
     border: none;
     border-radius: 1rem;
     color: inherit;
@@ -78,43 +115,90 @@ dialog::backdrop {
 form {
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-end; */
     align-items: stretch;
 
     width: 350px;
 }
 
 input {
-    width: 200px;
-    /* TODO: Fix checkbox width */
+    width: 100%;
+    font-size: 24px;
+
+    padding: 8px 12px;
+    border: 2px solid oklch(45% 0 0);
+    border-radius: 10px;
+    background-color: oklch(25% 0 0);
+    color: oklch(95% 0 0);
+    transition: all 0.2s ease;
+}
+
+input::placeholder {
+    color: oklch(65% 0 0);
+    opacity: 1;
+    font-weight: 600;
+}
+
+input:focus {
+    outline: none;
+    border-color: oklch(50% 0.11 215);
+    background-color: oklch(28% 0 0);
+    box-shadow: 0 0 0 3px oklch(50% 0.11 215 / 0.2);
+}
+
+input:hover {
+    border-color: oklch(55% 0 0);
+    background-color: oklch(27% 0 0);
+}
+
+input:invalid {
+    border-color: oklch(55% 0.15 15);
+}
+
+input:valid {
+    border-color: oklch(60% 0.15 145);
+}
+
+/* Checkbox specific */
+#read {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    accent-color: oklch(50% 0.11 215);
+}
+
+label {
+    font-size: 24px;
+    font-weight: 500;
+    color: oklch(90% 0 0);
 }
 
 .label-input {
     display: flex;
     flex-direction: row;
-    /* flex: auto; */
-    /* justify-self: stretch; */
-    justify-content: space-between;
+    align-items: center;
 
+    font-size: 24px;
     padding: 5px 10px;
-    background-color: rgb(12, 126, 55);
+}
+
+.checkbox-input {
+    justify-content: space-between;
+}
+
+.submit-button {
+    margin-bottom: 0;
+    align-self: center;
+
+    background-color: oklch(50% 0.11 215);
 }
 
 .close-button {
-    /* justify-self: center; */
     align-self: center;
-    background-color: blueviolet;
+    background-color: oklch(50% 0.12785 23.166);
 }
 
-main {
-    display: flex;
-    flex-wrap: wrap;
-    flex: auto;
-    justify-content: center;
-    /* justify-content: flex-start; */
-    /* align-items: stretch; */
-    align-self: stretch;
-    background-color: darkgreen;
+.close-button:hover {
+    background-color: oklch(55.653% 0.16667 24.417);
 }
 
 .card {
@@ -124,15 +208,31 @@ main {
     width: 250px;
     margin: 20px;
     padding: 20px;
-    background-color: brown;
+    box-shadow: 0 8px 16px oklch(0% 0 0 / 0.5);
+    border-radius: 10px;
+    /* border-radius: 1rem; */
+    background-color: oklch(35% 0 0);
 }
 
-.remove {
+.read {
     margin: 20px 0 0 0;
     align-self: center;
+    background-color: oklch(55% 0.13 143.398)
 }
 
+.read:hover {
+    background-color: oklch(60% 0.16 143.398)
+}
 
+.remove, .not-read {
+    margin: 20px 0 0 0;
+    align-self: center;
+    background-color: oklch(50% 0.13 23.166);
+}
+
+.remove:hover, .not-read:hover {
+    background-color: oklch(55% 0.16 24.417);
+}
 
 
 

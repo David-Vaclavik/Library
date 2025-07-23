@@ -1,41 +1,12 @@
-// All books should be in an array
-const myLibrary = [];
-
-// ================================================
-
 // All books should be objects in an array
-const myLibraryTest = [
-  {id: 1, title: 'The Hobbit', author: 'J.R.R. Tolkien', pages: 310, read: false},
-  {id: 2, title: '1984', author: 'George Orwell', pages: 328, read: true},
-  {id: 3, title: 'To Kill a Mockingbird', author: 'Harper Lee', pages: 281, read: true}
+const myLibrary = [
+  new Book(1, 'The Hobbit', 'J.R.R. Tolkien', 310, false),
+  new Book(2, '1984', 'George Orwell', 328, true),
+  new Book(3, 'To Kill a Mockingbird', 'Harper Lee', 281, true),
+  new Book(4, 'The Great Gatsby', 'F. Scott Fitzgerald', 180, false),
 ];
-// console.log(myLibraryTest[0].pages);
 
-const book2 = {id: 1, title: 'The Hobbit', author: 'J.R.R. Tolkien', pages: 310, read: false};
-/*
-for (const key in book2) {
-  // console.log(key);        // Logs: "id", "title", "author"
-  // console.log(book2[key]);  // Logs: 1, "The Hobbit", "Tolkien"
-
-  if (key === "id") {
-    console.log("ID is " + book2[key]);
-  } else if (key === "title") {
-    console.log("Title is " + book2[key]);
-  } else if (key === "author") {
-    console.log("Author is " + book2[key]);
-  }
-}
-*/
-//? Below for dev purposes to add button
-let title = book2.title;
-let author = book2.author;
-let pages = book2.pages;
-let read = book2.read;
-
-// ================================================
-// Book constructor
 function Book(id, title, author, pages, read) {
-  // console.log("Book construction started");
   this.id = id;
   this.title = title;
   this.author = author;
@@ -43,23 +14,15 @@ function Book(id, title, author, pages, read) {
   this.read = read;
 }
 
-//TODO: Book library
 function addBookToLibrary(id, title, author, pages, read) {
-  // take params, create a book then store it in the array
-
   const newBook = new Book(id, title, author, pages, read);
-
   myLibrary.push(newBook);
-  console.log(myLibrary);
 }
 
-// const dialog = document.querySelector("dialog")
 const openButton = document.querySelector("[data-open-modal]")
 const closeButton = document.querySelector("[data-close-modal]")
 const modal = document.querySelector("[data-modal]")
-const submitButton = document.querySelector(".submit-button")
 const form = document.querySelector('form');
-
 
 openButton.addEventListener('click', () => {
   modal.showModal();
@@ -69,31 +32,24 @@ closeButton.addEventListener('click', () => {
   modal.close();
 })
 
-// Initial ID
-let id = 1;
+//** Initial ID - starts from 5 because we have few examples in myLibrary = []
+let id = 5;
 
 form.addEventListener('submit', (e) => {
-  // console.log("form submitted");
-  e.preventDefault(); // Prevent form from submitting normally
+  e.preventDefault();
     
   // Get form input values
   const titleInput = document.getElementById('title').value;
   const authorInput = document.getElementById('author').value;
   const pagesInput = document.getElementById('pages').value;
   const readInput = document.getElementById('read').checked;
-
-  appendToMain(titleInput, authorInput, pagesInput, readInput)
-
-  // const newBook = new Book(id, titleInput, authorInput, parseInt(pagesInput), readInput);
- 
-  //TODO: Testing function
+  
   addBookToLibrary(id, titleInput, authorInput, parseInt(pagesInput), readInput);
+
+  appendToMain(id, titleInput, authorInput, pagesInput, readInput)
 
   //** increments ID each time a book is added
   id++;
-
-  // myLibrary.push(newBook);
-  // console.log(myLibrary);
 
   form.reset();
   modal.close();
@@ -112,30 +68,22 @@ modal.addEventListener("click", e => {
   }
 })
 
-
 // Removes cards
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('remove')) {
     // Remove the parent card from DOM
     e.target.parentElement.remove();
 
-    //? maybe also delete the book from the array?
+    //TODO: maybe also delete the book from the array?
   }
 });
 
-
-// Selects Main
 const selectMain = document.querySelector("main");
-// const appendToMain = (value) => selectMain.textContent += value; - destroys all HTML
-// const appendToMain = (value) => selectMain.innerHTML += value; - better
 
-// listens for button click
-const addBookBtn = document.querySelector(".add-book");
-addBookBtn.addEventListener('click', () => appendToMain(title, author, pages, read));
-
-const appendToMain = (title, author, pages, read) => {
+const appendToMain = (bookId, title, author, pages, read) => {
     const div = document.createElement('div');
     div.className = 'card';
+    div.id = bookId;
 
     const h3 = document.createElement('h3');
     h3.textContent = title;
@@ -150,8 +98,14 @@ const appendToMain = (title, author, pages, read) => {
     div.appendChild(pPages);
 
     const pRead = document.createElement('p');
-    pRead.textContent = 'Status: ' + (read ? 'Read' : 'Not read yet');
+    pRead.textContent = 'Status: ' + (read ? 'Read' : 'Not Read');
     div.appendChild(pRead);
+
+    const statusBtn = document.createElement('button');
+    statusBtn.className = 'status';
+    statusBtn.classList.add(read ? 'read' : 'not-read');
+    statusBtn.textContent = (read ? 'Read' : 'Not Read');
+    div.appendChild(statusBtn);
 
     const removeBtn = document.createElement('button');
     removeBtn.className = 'remove';
@@ -161,13 +115,35 @@ const appendToMain = (title, author, pages, read) => {
     selectMain.appendChild(div);
 };
 
+Book.prototype.toggleReadStatus = function() {
+  this.read = !this.read;
+};
 
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('status')) {
 
-// function Slayer(name, marker) {
-//   this.name = name;
-  // this.marker = marker;
-// }
+    const bookCard = e.target.parentElement;
+    const bookId = parseInt(bookCard.id);
 
-// // You can use it by calling the function with the keyword "new"
-// const player = new Player('steve', 'X');
-// console.log(player.name); // 'steve'
+    const book = myLibrary.find(book => book.id === bookId);
+    if (book) {
+      book.toggleReadStatus();
+      
+      // Update UI
+      // Button
+      e.target.textContent = book.read ? 'Read' : 'Not Read';
+      e.target.classList.replace(
+        book.read ? 'not-read' : 'read',
+        book.read ? 'read' : 'not-read'
+      )
+
+      //Text p
+      const statusP = bookCard.querySelector('p:nth-child(4)');
+      statusP.textContent = 'Status: ' + (book.read ? 'Read' : 'Not Read');
+    }
+  }
+});
+
+for (const book of myLibrary) {
+  appendToMain(book.id, book.title, book.author, book.pages, book.read)
+}
